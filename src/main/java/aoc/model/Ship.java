@@ -77,7 +77,6 @@ public class Ship {
                 waypointE -= unit;
                 break;
             case 'R':
-                //3,1  90 -> 1,-3
                 int stepsR = unit / 90;
                 switch (stepsR) {
                     case 1:
