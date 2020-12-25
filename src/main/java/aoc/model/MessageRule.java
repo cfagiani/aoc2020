@@ -5,6 +5,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Encapsulates a rule for validating a message. Used in Day 19.
+ */
 public class MessageRule {
     private List<List<Integer>> subrules;
     private String literal;

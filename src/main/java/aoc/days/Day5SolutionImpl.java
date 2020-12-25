@@ -1,6 +1,7 @@
 package aoc.days;
 
 import aoc.DaySolution;
+import aoc.Part1RequiredException;
 import aoc.model.Seat;
 import aoc.util.StringUtil;
 
@@ -31,6 +32,9 @@ public class Day5SolutionImpl implements DaySolution {
 
     @Override
     public void part2(String input) {
+        if (seats == null) {
+            throw new Part1RequiredException();
+        }
         Seat[] orderedSeats = seats.values().toArray(new Seat[] {});
         //look at a sliding window of seats
         for (int i = 1; i < orderedSeats.length; i++) {

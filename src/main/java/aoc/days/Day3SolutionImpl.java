@@ -22,6 +22,9 @@ public class Day3SolutionImpl implements DaySolution {
 
     @Override
     public void part2(String input) {
+        if (map == null) {
+            initializeMap(StringUtil.splitOnLines(input));
+        }
         int[][] slopes = {{1, 1}, {3, 1}, {5, 1}, {7, 1}, {1, 2}};
         long product = 1;
         for (int[] slope : slopes) {

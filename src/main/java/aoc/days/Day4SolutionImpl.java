@@ -24,6 +24,9 @@ public class Day4SolutionImpl implements DaySolution {
 
     @Override
     public void part2(String input) {
+        if (this.passports == null) {
+            this.passports = buildPassportList(StringUtil.splitOnLines(input));
+        }
         long validCount = this.passports.stream().filter(p -> p.isValid(false)).count();
         System.out.println("There are " + validCount + " valid passports");
     }

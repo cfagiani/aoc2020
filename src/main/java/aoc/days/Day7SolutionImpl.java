@@ -1,6 +1,7 @@
 package aoc.days;
 
 import aoc.DaySolution;
+import aoc.Part1RequiredException;
 import aoc.model.BagRule;
 import aoc.model.BagRuleGraph;
 import aoc.util.StringUtil;
@@ -45,6 +46,9 @@ public class Day7SolutionImpl implements DaySolution {
 
     @Override
     public void part2(String input) {
+        if(ruleGraph == null){
+            throw new Part1RequiredException();
+        }
         int count = 0;
         Stack<BagRule> rulesToSatisfy = new Stack<>();
         String myBag = "shiny gold";

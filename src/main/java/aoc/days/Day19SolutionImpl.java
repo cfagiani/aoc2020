@@ -10,6 +10,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+/**
+ * Determines how many messages from the input can be derived using a set of rules. Part 1 assumes no cycles in the
+ * rules whereas part 2 inserts a cycle.
+ */
 public class Day19SolutionImpl implements DaySolution {
 
     private List<String> messages;

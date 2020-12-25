@@ -1,6 +1,7 @@
 package aoc.days;
 
 import aoc.DaySolution;
+import aoc.Part1RequiredException;
 import aoc.model.PassengerGroup;
 import aoc.util.StringUtil;
 
@@ -39,6 +40,9 @@ public class Day6SolutionImpl implements DaySolution {
 
     @Override
     public void part2(String input) {
+        if (groups == null) {
+            throw new Part1RequiredException();
+        }
         int count = 0;
         for (PassengerGroup group : groups) {
             count += group.countAllAffirmatives();

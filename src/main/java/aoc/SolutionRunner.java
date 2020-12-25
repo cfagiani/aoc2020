@@ -13,22 +13,43 @@ import java.nio.file.Paths;
  */
 public class SolutionRunner {
 
+    private static final String ALL_DAYS = "all";
+    private static final int START_DAY = 1;
+    private static final int END_DAY = 25;
+
     public static void main(String[] args) throws IOException, ReflectiveOperationException {
         checkUsage(args);
-        String input = loadInput(args[0], args[1]);
-        DaySolution solution = loadSolutionClass(args[0]);
-        execute(solution, input);
+        int startDay = START_DAY;
+        int endDay = END_DAY;
+        if (!ALL_DAYS.equalsIgnoreCase(args[0])) {
+            // we're running a specific day. Set start and end to that value
+            startDay = Integer.parseInt(args[0]);
+            endDay = startDay;
+        }
+        long start = System.currentTimeMillis();
+        for (int i = startDay; i <= endDay; i++) {
+            System.out.println("\n===DAY " + i + "===");
+            String input = loadInput(i, args[1]);
+            try {
+                DaySolution solution = loadSolutionClass(i);
+                execute(solution, input);
+            } catch (ReflectiveOperationException ex) {
+                System.out.println("Solution implementation not found");
+            }
+        }
+        System.out.println("\nTotal time: " + ((double)(System.currentTimeMillis() - start))/1000.0+" seconds");
+
     }
 
     /**
-     * Uses refletion to find the solution implementation based on the day number passed in. Solutions must reside in the
+     * Uses reflection to find the solution implementation based on the day number passed in. Solutions must reside in the
      * aoc.days package and be named DayNSolutionImpl where N is the day number.
      *
      * @param dayNumber
      * @return
      * @throws ReflectiveOperationException
      */
-    private static DaySolution loadSolutionClass(String dayNumber) throws ReflectiveOperationException {
+    private static DaySolution loadSolutionClass(int dayNumber) throws ReflectiveOperationException {
         Class<DaySolution> solutionClass = (Class<DaySolution>) Class.forName("aoc.days.Day" + dayNumber + "SolutionImpl");
         return solutionClass.getConstructor().newInstance();
     }
@@ -43,8 +64,11 @@ public class SolutionRunner {
             System.err.println("Usage: java aoc.SolutionRunner <day> <inputDir>");
             System.exit(1);
         } else {
-            String dayMsg = "Day argument must be an integer between 1 and 25";
+            String dayMsg = "Day argument must be an integer between 1 and 25 or 'all'";
             try {
+                if (ALL_DAYS.equalsIgnoreCase(args[0])) {
+                    return;
+                }
                 int dayNum = Integer.parseInt(args[0]);
                 if (dayNum < 1 || dayNum > 25) {
                     System.err.println(dayMsg);
@@ -67,7 +91,7 @@ public class SolutionRunner {
      * @return
      * @throws IOException
      */
-    private static String loadInput(String dayNumber, String rootDir) throws IOException {
+    private static String loadInput(int dayNumber, String rootDir) throws IOException {
         String input = null;
         Path inputPath = Paths.get(rootDir, "day" + dayNumber, "input.txt");
         if (Files.exists(inputPath)) {
